@@ -37,21 +37,13 @@ Windows(activate permission for virtual env first if using powershell): `env/Scr
 
 ##### 5. Install all necessary packages mentioned in `requirements.txt`
 
-`pip install requirements.txt`
+`pip install -r requirements.txt`
 
-##### 6. Install all necessary packages mentioned in `requirements.txt`
-
-`pip install requirements.txt`
-
-##### 7. Install all necessary packages mentioned in `requirements.txt`
-
-`pip install requirements.txt`
-
-##### 8. Go to the actual django project directory
+##### 6. Go to the actual django project directory
 
 `cd project`
 
-##### 9. Run the development server
+##### 7. Run the development server
 
 Windows: `py manage.py runserver` <br>
 Mac/Linux: `python/python3 manage.py runserver`
