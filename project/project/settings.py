@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # other 3'rd party apps
+    'drf_material',
     'rest_framework',
     'knox',
     'drf_yasg',

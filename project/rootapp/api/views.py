@@ -60,7 +60,7 @@ class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
-    @action(detail=True)
+    @action(detail=True, methods=['get'], name="Tasks in this Project")
     def tasks(self, request, pk):
         project = get_object_or_404(self.get_queryset(), pk=pk)
         tasks = Task.objects.filter(project=project)

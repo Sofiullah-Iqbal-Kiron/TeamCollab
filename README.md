@@ -15,6 +15,7 @@ Database migrations are already done. If you want to change the database then af
 1. Handy RESTful API's.
 2. Documentation for apis included with OpenAPI 2.0 schema.
 3. Token based authentication using [Django REST Knox](https://github.com/jazzband/django-rest-knox).
+4. Browsable API redesigned with [material-design](https://github.com/youzarsiph/drf-material).
 
 ## Setup locally
 
