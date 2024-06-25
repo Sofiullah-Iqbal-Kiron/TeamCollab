@@ -54,7 +54,7 @@ Mac/Linux: `python/python3 manage.py runserver`
 - [ ] Use JWT authentication instead of Knox-Token authentication
 - [ ] Develop CI/CD pipelines
 - [ ] Optimize view processing
-- [ ] Redesign Browsable API
+- [X] Redesign Browsable API
 
 ## Conclusion
 
