@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
@@ -11,14 +11,14 @@ from rest_framework.decorators import action
 
 
 from ..models import User, Project, Task, Comment
-from .serializers import UserSerializer, UserRegistrationSerializer, ProjectSerializer, TaskSerializer, CommentSerializer
+from .serializers import UserSerializer, UserRegistrationSerializer, ProjectSerializer, TaskSerializer, TaskCreateSerializer, CommentSerializer, CommentCreateSerializer
 
 
 class UserRegister(CreateAPIView):
     """
     Register as a new User.
     """
-    
+
     permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
@@ -57,13 +57,32 @@ class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
-    @action(detail=True, methods=['get'], name="Tasks in this Project")
-    def tasks(self, request, pk):
-        project = get_object_or_404(self.get_queryset(), pk=pk)
-        tasks = Task.objects.filter(project=project)
+
+class TaskListCreate(ListCreateAPIView):
+    """
+    List and Create task for specified project.
+    """
+
+    queryset = Task.objects.all()
+    serializer_class = TaskCreateSerializer
+    projects = Project.objects.all()
+
+    def get(self, request, pk):
+        project = get_object_or_404(self.projects, pk=pk)
+        tasks = self.get_queryset().filter(project=project)
         serializer = TaskSerializer(tasks, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request, pk):
+        project = get_object_or_404(self.projects, pk=pk)
+        data = request.data
+        serializer = TaskCreateSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        new_task = Task.objects.create(**serializer.validated_data, project=project)
+        new_serializer = TaskSerializer(new_task)
+
+        return Response(new_serializer.data, status=status.HTTP_201_CREATED)
 
 
 class TaskViewSet(ModelViewSet):
@@ -74,43 +93,42 @@ class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
-    def list(self, request):
-        content = {
-            'detail': "Listing tasks via that endpoint aren't allowed."
-        }
+    def list(self, request, pk):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, pk=pk)
+        tasks = Task.objects.filter(project=project)
+        serializer = TaskSerializer(tasks, many=True)
 
-        return Response(content, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-    def create(self, request):
-        content = {
-            'detail': "Creating task via that endpoint aren't allowed."
-        }
-        
-        return Response(content, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-    @action(detail=True)
-    def comments(self, request, pk):
-        task = get_object_or_404(self.get_queryset(), pk=pk)
-        comments = Comment.objects.filter(task=task)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CommentListCreate(ListCreateAPIView):
+    """
+    List and Create comment for specified task.
+    """
+
+    queryset = Comment.objects.all()
+    serializer_class = CommentCreateSerializer
+    tasks = Task.objects.all()
+
+    def get(self, request, pk):
+        task = get_object_or_404(self.tasks, pk=pk)
+        comments = self.get_queryset().filter(task=task)
         serializer = CommentSerializer(comments, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request, pk):
+        task = get_object_or_404(self.tasks, pk=pk)
+        data = request.data
+        serializer = CommentCreateSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        new_comment = Comment.objects.create(**serializer.validated_data, task=task)
+        new_serializer = CommentSerializer(new_comment)
+
+        return Response(new_serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-
-    def list(self, request):
-        content = {
-            'detail': "Listing comments via that endpoint aren't allowed."
-        }
-
-        return Response(content, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-    def create(self, request):
-        content = {
-            'detail': "Making comments aren't allowed via that endpoint."
-        }
-
-        return Response(content, status=status.HTTP_405_METHOD_NOT_ALLOWED)

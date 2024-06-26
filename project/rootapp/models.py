@@ -91,7 +91,7 @@ class Task(models.Model):
     priority = models.CharField(max_length=len(get_largest_choice(PRIORITY_CHOICES)), choices=PRIORITY_CHOICES)
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     due_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
@@ -102,7 +102,7 @@ class Comment(models.Model):
     content = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
         return self.content

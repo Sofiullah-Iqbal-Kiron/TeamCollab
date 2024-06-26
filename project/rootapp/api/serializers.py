@@ -80,9 +80,26 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TaskCreateSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%d %B %Y, %I:%M %p")
+    due_date = serializers.DateTimeField(format="%d %B %Y, %I:%M %p")
+
+    class Meta:
+        model = Task
+        exclude = ['project']
+
+
 class CommentSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%d %B %Y, %I:%M %p")
 
     class Meta:
         model = Comment
         fields = '__all__'
+
+
+class CommentCreateSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%d %B %Y, %I:%M %p")
+    
+    class Meta:
+        model = Comment
+        exclude = ['task']

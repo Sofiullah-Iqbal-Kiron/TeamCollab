@@ -27,7 +27,7 @@ urlpatterns = [
     # third party apps
     path('api-auth/', include('rest_framework.urls')),
 
-    path('api/login/', TokenObtainPairView.as_view(), name='token-pair-obtain'),
+    path('api/users/login/', TokenObtainPairView.as_view(), name='token-pair-obtain'),
 
     path('api/docs/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-schema'),
     path('api/docs/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc-schema'),
