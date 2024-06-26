@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
@@ -11,29 +12,23 @@ from ..models import User, Project, Task, Comment
 from .serializers import UserSerializer, UserRegistrationSerializer, ProjectSerializer, TaskSerializer, CommentSerializer
 
 
-class UserRegister(APIView):
+class UserRegister(CreateAPIView):
     """
     Register as a new User.
     """
-
+    
     permission_classes = [AllowAny]
-
-    def get(self, request):
-        content = {
-            'required fields': ['username', 'email', 'password', 'password_confirmation'],
-            'optional fields': ['first_name', 'last_name']
-        }
-
-        return Response(content, status=status.HTTP_200_OK)
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
 
     def post(self, request):
         data = request.data
         serializer = UserRegistrationSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         registered_user = serializer.save()
-        registered_user_serialize = UserSerializer(registered_user)
+        registered_user_serializer = UserSerializer(registered_user)
 
-        return Response(registered_user_serialize.data, status=status.HTTP_201_CREATED)
+        return Response(registered_user_serializer.data, status=status.HTTP_201_CREATED)
 
 
 class UserViewSet(ModelViewSet):

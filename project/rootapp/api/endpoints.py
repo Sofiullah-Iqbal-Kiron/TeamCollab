@@ -11,10 +11,7 @@ router.register(r'projects', ProjectViewSet, basename='project')
 router.register(r'tasks', TaskViewSet, basename='task')
 router.register(r'comments', CommentViewSet, basename='comment')
 
-# user
-user_register = UserRegister.as_view()
-
 endpoints = [
     # user
-    path('users/register/', user_register, name='user-register'),
+    path('users/register/', UserRegister.as_view(), name='user-register'),
 ] + router.urls

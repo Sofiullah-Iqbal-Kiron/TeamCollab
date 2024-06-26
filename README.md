@@ -44,17 +44,24 @@ Windows(activate permission for virtual env first if using powershell): `env/Scr
 
 `cd project`
 
-##### 7. Run the development server
+##### 7. Run development server
 
 Windows: `py manage.py runserver` <br>
 Mac/Linux: `python/python3 manage.py runserver`
+
+## API documentation
+
+After starting development server, both swagger-style and redoc-style documentation will be found at: <br>
+
+- $Swagger$ `api/docs/swagger/`
+- $Redoc$ `api/docs/redoc/`
 
 ## Todo
 
 - [ ] Use JWT authentication instead of Knox-Token authentication
 - [ ] Develop CI/CD pipelines
 - [ ] Optimize view processing
-- [X] Redesign Browsable API
+- [x] Redesign Browsable API
 
 ## Conclusion
 
