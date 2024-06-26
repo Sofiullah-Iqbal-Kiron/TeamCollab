@@ -58,10 +58,11 @@ After starting development server, both swagger-style and redoc-style documentat
 
 ## Todo
 
-- [x] Use JWT authentication instead of Knox-Token authentication
+- [X] Use JWT authentication instead of Knox-Token authentication
 - [ ] Develop CI/CD pipelines
 - [ ] Optimize view processing
-- [x] Redesign Browsable API
+- [X] Redesign Browsable API
+- [X] Decouple some view logics
 
 ## Conclusion
 
