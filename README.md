@@ -13,8 +13,8 @@ Database migrations are already done. If you want to change the database then af
 ## Features
 
 1. Handy RESTful API's.
-2. Documentation for apis included with OpenAPI 2.0 schema.
-3. Token based authentication using [Django REST Knox](https://github.com/jazzband/django-rest-knox).
+2. API documentation included with OpenAPI 2.0 schema.
+3. JSON Web Token authentication using [Django Simple JWT](https://github.com/jazzband/djangorestframework-simplejwt).
 4. Browsable API redesigned with [material-design](https://github.com/youzarsiph/drf-material).
 
 ## Setup locally
@@ -58,10 +58,10 @@ After starting development server, both swagger-style and redoc-style documentat
 
 ## Todo
 
-- [ ] Use JWT authentication instead of Knox-Token authentication
+- [X] Use JWT authentication instead of Knox-Token authentication
 - [ ] Develop CI/CD pipelines
 - [ ] Optimize view processing
-- [x] Redesign Browsable API
+- [X] Redesign Browsable API
 
 ## Conclusion
 

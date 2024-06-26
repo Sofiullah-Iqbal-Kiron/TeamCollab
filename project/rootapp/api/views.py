@@ -5,8 +5,10 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.decorators import action
+
 
 from ..models import User, Project, Task, Comment
 from .serializers import UserSerializer, UserRegistrationSerializer, ProjectSerializer, TaskSerializer, CommentSerializer

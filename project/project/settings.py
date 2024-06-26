@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     # other 3'rd party apps
     'drf_material',
     'rest_framework',
-    'knox',
+    'rest_framework_simplejwt',
     'drf_yasg',
 
     # local apps
@@ -41,7 +41,7 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'knox.auth.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],

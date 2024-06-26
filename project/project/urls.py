@@ -1,7 +1,9 @@
 from django.contrib import admin
-from django.urls import re_path, path, include
+from django.urls import path, include
 
 from rest_framework import permissions
+
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -24,7 +26,9 @@ urlpatterns = [
 
     # third party apps
     path('api-auth/', include('rest_framework.urls')),
-    path('api/users/', include('knox.urls')),
+
+    path('api/login/', TokenObtainPairView.as_view(), name='token-pair-obtain'),
+
     path('api/docs/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-schema'),
     path('api/docs/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc-schema'),
 
